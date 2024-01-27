@@ -9,6 +9,8 @@ app.listen(3000, () => {
   console.log(`App is running on http://localhost:${PORT}`);
 });
 
+app.use("/static", express.static("public"));
+
 app.get("/", (req, res) => {
   res.send("Hello, World!");
 });
