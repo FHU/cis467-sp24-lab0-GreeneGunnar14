@@ -54,6 +54,11 @@ app.get("/math/:num1/:op/:num2", (req, res) => {
   res.render("math", { result });
 });
 
+const facts = require("./facts.json");
+
 app.get("/pandorasbox", (req, res) => {
-  res.render("pandorasbox", { title: "Pandora's Box" });
+  const index = Math.floor(Math.random() * facts.length);
+  const fact = facts[index]["fact"];
+
+  res.render("pandorasbox", { title: "Pandora's Box", fact });
 });
