@@ -100,7 +100,6 @@ app.get("/pandorasbox", (req, res) => {
       })
         .then((resp) => resp.json())
         .then((data) => {
-          console.log(data);
           res.render("pandorasbox", {
             title: "Pandora's Box",
             message: data.joke,
