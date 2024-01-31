@@ -59,29 +59,55 @@ app.get("/math/:num1/:op/:num2", (req, res) => {
 });
 
 const facts = require("./facts.json");
-const jokes = require("./jokes.json");
+const joke_url = "https://icanhazdadjoke.com";
+
+async function get_joke() {
+  const res = await fetch(joke_url, {
+    headers: {
+      Accept: "application/json",
+    },
+  });
+  const data = res.json;
+  return data.joke;
+}
 
 app.get("/pandorasbox", (req, res) => {
   const mode = Math.floor(Math.random() * 3);
   let message;
 
   switch (mode) {
-    case 0:
+    case 0: {
       const f_index = Math.floor(Math.random() * facts.length);
       message = facts[f_index]["fact"];
+      res.render("pandorasbox", { title: "Pandora's Box", message, mode });
       break;
-    case 1:
+    }
+    case 1: {
       const images_path = path.join("public", "images");
       const images = fs.readdirSync(images_path);
       const img_count = images.length;
       const img_index = Math.floor(Math.random() * img_count);
       const img_name = images[img_index];
       message = img_name;
+      res.render("pandorasbox", { title: "Pandora's Box", message, mode });
       break;
-    case 2:
-      const j_index = Math.floor(Math.random() * jokes.length);
-      message = jokes[j_index]["joke"];
+    }
+    case 2: {
+      fetch(joke_url, {
+        headers: {
+          Accept: "application/json",
+        },
+      })
+        .then((resp) => resp.json())
+        .then((data) => {
+          console.log(data);
+          res.render("pandorasbox", {
+            title: "Pandora's Box",
+            message: data.joke,
+            mode,
+          });
+        });
       break;
+    }
   }
-  res.render("pandorasbox", { title: "Pandora's Box", message, mode });
 });
