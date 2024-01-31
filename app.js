@@ -5,11 +5,12 @@ const path = require("path");
 const app = express();
 
 const PORT = process.env.PORT || "3000";
+const HOST = process.env.HOST;
 
 app.set("view engine", "ejs");
 
 app.listen(3000, () => {
-  console.log(`App is running on http://localhost:${PORT}`);
+  console.log(`App is running on http://${HOST}:${PORT}`);
 });
 
 app.use("/static", express.static("public"));
