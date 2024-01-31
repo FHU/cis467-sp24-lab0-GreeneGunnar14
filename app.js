@@ -58,6 +58,7 @@ app.get("/math/:num1/:op/:num2", (req, res) => {
 });
 
 const facts = require("./facts.json");
+const jokes = require("./jokes.json");
 
 app.get("/pandorasbox", (req, res) => {
   const mode = Math.floor(Math.random() * 3);
@@ -65,8 +66,8 @@ app.get("/pandorasbox", (req, res) => {
 
   switch (mode) {
     case 0:
-      const index = Math.floor(Math.random() * facts.length);
-      message = facts[index]["fact"];
+      const f_index = Math.floor(Math.random() * facts.length);
+      message = facts[f_index]["fact"];
       break;
     case 1:
       const images_path = path.join("public", "images");
@@ -74,7 +75,12 @@ app.get("/pandorasbox", (req, res) => {
       const img_count = images.length;
       const img_index = Math.floor(Math.random() * img_count);
       const img_name = images[img_index];
-      message = `${img_name}`;
+      message = img_name;
+      break;
+    case 2:
+      const j_index = Math.floor(Math.random() * jokes.length);
+      message = jokes[j_index]["joke"];
+      break;
   }
   res.render("pandorasbox", { title: "Pandora's Box", message, mode });
 });
