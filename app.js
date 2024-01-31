@@ -1,4 +1,7 @@
 const express = require("express");
+const fs = require("fs");
+const path = require("path");
+
 const app = express();
 
 const PORT = process.env.PORT || "3000";
@@ -57,8 +60,21 @@ app.get("/math/:num1/:op/:num2", (req, res) => {
 const facts = require("./facts.json");
 
 app.get("/pandorasbox", (req, res) => {
-  const index = Math.floor(Math.random() * facts.length);
-  const fact = facts[index]["fact"];
+  const mode = Math.floor(Math.random() * 3);
+  let message;
 
-  res.render("pandorasbox", { title: "Pandora's Box", fact });
+  switch (mode) {
+    case 0:
+      const index = Math.floor(Math.random() * facts.length);
+      message = facts[index]["fact"];
+      break;
+    case 1:
+      const images_path = path.join("public", "images");
+      const images = fs.readdirSync(images_path);
+      const img_count = images.length;
+      const img_index = Math.floor(Math.random() * img_count);
+      const img_name = images[img_index];
+      message = `${img_name}`;
+  }
+  res.render("pandorasbox", { title: "Pandora's Box", message, mode });
 });
