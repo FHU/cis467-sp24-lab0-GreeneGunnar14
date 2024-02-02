@@ -4,13 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lab 0 | <%= title %></title>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <h1><%= title %></h1>
     <% if (mode === 1) { %>
-    <img src="static/images/<%= message %>" alt="random image" />
+    <img src="images/<%= message %>" alt="random image" />
     <% } else { %>
     <p><%= message %></p>
     <% } %>
   </body>
+  <script src="randomcolor.js"></script>
 </html>
