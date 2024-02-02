@@ -17,4 +17,4 @@ function main() {
   content.style.color = text_color;
 }
 
-document.onload(main());
+main();
