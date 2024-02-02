@@ -9,11 +9,11 @@ const HOST = process.env.HOST;
 
 app.set("view engine", "ejs");
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
   console.log(`App is running on http://${HOST}:${PORT}`);
 });
 
-app.use("/static", express.static("public"));
+app.use(express.static("public"));
 
 app.get("/", (req, res) => {
   res.send("Hello, World!");
@@ -23,9 +23,12 @@ app.get("/greet", (req, res) => {
   const cur_year = new Date().getFullYear();
   const user_dob = parseInt(req.query.year);
   const age = cur_year - user_dob;
-  res.send(
-    `Hello, ${req.query.name}!<br>You are ${age - 1} or ${age} years old.`
-  );
+  res.render("greet", {
+    title: "Greet",
+    name: req.query.name,
+    age1: age - 1,
+    age2: age,
+  });
 });
 
 app.get("/math/:num1/:op/:num2", (req, res) => {
